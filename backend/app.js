@@ -1,10 +1,10 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const path = require('path');
-
-const sauceRoutes = require('./routes/sauces');
-const userRoutes = require('./routes/user'); 
+const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user');
+const path = require('path'); 
 
 mongoose
 .connect(
@@ -13,10 +13,6 @@ mongoose
 )
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
-
-
-const app = express();
-
 
 app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Origin', '*');

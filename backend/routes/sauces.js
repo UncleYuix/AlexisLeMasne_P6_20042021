@@ -8,7 +8,7 @@ router.get("/", auth, saucesCtrl.getAllsauces);
 router.get("/:id", auth, saucesCtrl.getOneSauce);
 router.post("/", auth, multer, saucesCtrl.createSauce);
 router.put("/:id", auth, multer, saucesCtrl.modifySauce);
-// router.post("/:id/like", auth, multer, saucesCtrl.likeDislikeSauce);
+// - ça n'a rien a foutre là, le vol c'est mal : router.post("/:id/like", auth, multer, saucesCtrl.likeDislikeSauce);
 router.delete("/:id", auth, saucesCtrl.deleteSauce);
 
 module.exports = router;
