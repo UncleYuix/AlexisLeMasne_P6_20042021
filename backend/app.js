@@ -6,8 +6,18 @@ const saucesRoutes = require("./routes/sauces");
 const userRoutes = require("./routes/user");
 const path = require("path");
 
+require('dotenv').config()
 
-mongoose.connect('mongodb+srv://Yuix:BTdZouIvuqlRpeK8@cluster0.rbpdo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+const host = process.env.DB_HOST;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASS;
+
+
+const apiLimiter = require("./middleware/api-limiter");
+
+const helmet = require("helmet");
+
+mongoose.connect('mongodb+srv://'+user+':'+password+'@'+host,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -30,7 +40,9 @@ app.use(bodyParser.json()); // Transforme le corps de la requête en objet JS
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/sauces", saucesRoutes);
-app.use("/api/auth", userRoutes);
+app.use("/api/sauces", apiLimiter, saucesRoutes);
+app.use("/api/auth", apiLimiter, userRoutes);
+
+app.use(helmet());
 
 module.exports = app;
