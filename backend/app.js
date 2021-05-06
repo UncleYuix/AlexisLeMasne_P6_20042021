@@ -17,6 +17,9 @@ const apiLimiter = require("./middleware/api-limiter");
 
 const helmet = require("helmet");
 
+const mongoSanitize = require('express-mongo-sanitize');
+
+
 mongoose.connect('mongodb+srv://'+user+':'+password+'@'+host,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -44,5 +47,7 @@ app.use("/api/sauces", apiLimiter, saucesRoutes);
 app.use("/api/auth", apiLimiter, userRoutes);
 
 app.use(helmet());
+
+app.use(mongoSanitize());
 
 module.exports = app;
